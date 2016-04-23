@@ -8,9 +8,8 @@ Implement UNIX function tail -n <filename using C and C++
 And something I haven't really started
 --------------------------------------------------------------------
 Contents:
-tail.c - Complete (Note: Few Valgrind errors, unidentifiable)
+tail.c    - Complete (Note: Few Valgrind errors, unidentifiable)
+tail2.cc  - Complete (Note: Not valgrind tested, small issue when file is smaller than tail argument)
 __TODO__
-tail2.cc
 comments
-
 and rest...
