@@ -1,12 +1,12 @@
+#include<iostream>
+#include<queue>
+#include<string>
+#include<fstream>
+
 #include<stdio.h>
 #include<string.h>
-#include <iostream>
-using std::cout;
-#include <fstream>
-using std::ifstream;
-#include <string>
-using std::string;
-using std::getline;
+
+using namespace std;
 
 
 void errMsg()
@@ -21,60 +21,63 @@ Correct Input:\n\
 ./tail -n 'number of desired last lines form stdin' 'filename'\n");
 }
 
-
 void getlineFile(const int NoL, string filename)
 {
-   ifstream file(filename);
-   string line, buffer[NoL];
-   size_t size = sizeof buffer / sizeof *buffer;
-   size_t i = 0;
+	ifstream file(filename);
+	string line;
+	queue<string> buffer;
 
-   while(getline(file, line))
-   {
-      buffer[i] = line;
-      if( ++i >= size )
-      {
-         i = 0;
-      }
-   }
+	for(int i = 0; i < NoL && getline(file, line); i++)
+	{
+		buffer.push(line);
+	}
 
-   for(size_t j = 0; j < size; ++j)
-   {
-      cout << buffer[i] << "\n";
-      if(++i >= size)
-      {
-         i = 0;
-      }
-   }
-   return;
+	while(getline(file, line))
+	{
+		buffer.pop();
+		buffer.push(line);
+	}
+
+
+	for(int k = 0;k < NoL; k++)
+	{
+		cout << buffer.front() << endl;
+		buffer.pop();
+		if(buffer.size() == 0)
+		{
+			return;
+		}
+	}
 }
+
 
 void getlineStdin(const int NoL)
 {
-   string line, buffer[NoL];
-   size_t size = sizeof buffer / sizeof *buffer;
-   size_t i = 0;
+	string line;
+	queue<string> buffer;
 
-   while(getline(std::cin, line))
-   {
-      buffer[i] = line;
-      if( ++i >= size )
-      {
-         i = 0;
-      }
-   }
+	for(int i = 0; i < NoL && getline(std::cin, line); i++)
+	{
+		buffer.push(line);
+	}
+
+	while(getline(std::cin, line))
+	{
+		buffer.pop();
+		buffer.push(line);
+	}
 
 	cout << "\n";
 
-   for(size_t j = 0; j < size; ++j)
-   {
-      cout << buffer[i] << "\n";
-      if(++i >= size)
-      {
-         i = 0;
-      }
-   }
-   return;
+	for(int k = 0;k < NoL; k++)
+	{
+		cout << buffer.front() << endl;
+		buffer.pop();
+		if(buffer.size() == 0)
+		{
+			return;
+		}
+	}
 }
 
 int main (int argc, char *argv[])
